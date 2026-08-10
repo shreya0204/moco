@@ -9,6 +9,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "shiki": "^1.29.0",
-    "typescript": "^5.7.0"
+    "typescript": "^7.0.2"
   }
 }
