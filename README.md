@@ -1,25 +1,30 @@
 # moco
 
-**Editorial components for React.** Copy-source components for technical essays and blogs — scrollytelling, Tufte margin notes, sparklines, before/after compares, animated numbers, block diagrams, code walkthroughs.
+Editorial components for React. Built for technical essays and blogs: scrollytelling, margin notes, sparklines, before/after compares, animated numbers, block diagrams, and code walkthroughs.
 
-Not another UI kit. moco is for people who *write*: every component is built for longform technical prose, with real typography, `prefers-reduced-motion` support, and ARIA baked in.
+Docs and live demos: **[mocoui.site](https://mocoui.site)**
 
-## Three ways to install
+moco is not a general UI kit. It covers the things longform writing needs and design systems usually skip. Every component ships with real typography, keyboard support, ARIA, and `prefers-reduced-motion` handling.
 
-**1. Ask Claude (MCP)** — add the moco MCP server and just describe what you need ("add a before/after slider to my post"):
+The code is copy-source. Components land in your repo as `.tsx` and `.css` files that you own and edit. There is no runtime package to install.
+
+## Install
+
+**Ask Claude.** Add the MCP server, then describe what you need.
 
 ```json
 { "mcpServers": { "moco": { "command": "npx", "args": ["-y", "moco-mcp"] } } }
 ```
 
-**2. shadcn CLI** — moco is a standard shadcn-format registry:
+Claude Code: `claude mcp add moco -- npx -y moco-mcp`
+
+**Use the shadcn CLI.** moco is a standard shadcn-format registry, so this works with no extra tooling.
 
 ```sh
 npx shadcn@latest add https://mocoui.site/r/compare.json
 ```
 
-Or register the namespace once in your `components.json` and install by name
-(this also lets the official shadcn MCP browse moco):
+Register the namespace once in `components.json` to install by name. This also lets the official shadcn MCP browse moco.
 
 ```json
 { "registries": { "@moco": "https://mocoui.site/r/{name}.json" } }
@@ -29,23 +34,38 @@ Or register the namespace once in your `components.json` and install by name
 npx shadcn@latest add @moco/compare
 ```
 
-**3. Copy-paste** — every component is a `.tsx` + `.css` pair on the docs site. Take it, it's yours.
+**Copy and paste.** Every component is a `.tsx` and `.css` pair, shown in full on its docs page.
 
 ## Setup
 
-Install the `tokens` item once and import `tokens.css` in your root layout. Every component styles itself exclusively from `--moco-*` variables — override any of them to retheme. Light and dark themes ship by default (`prefers-color-scheme`, forceable via `data-theme`).
+Install the `tokens` item once and import `tokens.css` in your root layout. Components style themselves from `--moco-*` variables, so overriding those retheme everything. Light and dark both ship by default, following `prefers-color-scheme` and forceable with `data-theme`.
+
+Full guide: [mocoui.site/docs/installation](https://mocoui.site/docs/installation)
+
+## What's in it
+
+20 registry items. Reading UI (margin notes, term popovers, section rail, sticky reading header, command palette), figures and data (sparklines, count-up numbers, draggable numbers, block diagrams, figure plates, editorial tables, generative covers), narrative (scrollytelling stage, stepper, before/after compare, code walkthroughs), and the shared pieces (scroll hooks, view transitions, design tokens).
+
+Browse them all at [mocoui.site/components](https://mocoui.site/components).
 
 ## Repo layout
 
-- `registry/` — component sources (one dir per item: `.tsx`, `.css`, `meta.json`, `demo.tsx`)
-- `apps/web` — docs site; serves the registry at `/r/*.json`
-- `packages/mcp` — `moco-mcp`, the MCP server (bundles the registry)
-- `scripts/build-registry.mjs` — emits the shadcn-format registry
+- `registry/` holds the component sources, one directory per item with `.tsx`, `.css`, `meta.json`, and `demo.tsx`
+- `apps/web` is the docs site, and serves the registry at `/r/*.json`
+- `packages/mcp` is `moco-mcp`, the MCP server, which bundles the registry
+- `scripts/build-registry.mjs` builds the registry and validates every item
 
 ## Develop
 
 ```sh
 pnpm install
 pnpm build:registry
-pnpm dev
+pnpm dev        # docs site on localhost:3000
+pnpm test       # registry validation and MCP smoke test
 ```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how a registry item is structured and the rules components follow.
+
+## License
+
+MIT
