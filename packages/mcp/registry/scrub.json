@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scrub",
+  "type": "registry:component",
+  "title": "Scrub Number",
+  "description": "Tangle-style inline number scrubber: drag the variable itself, with a compact range input for pointer and keyboard access.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/scrub/scrub.tsx",
+      "type": "registry:component",
+      "target": "components/moco/scrub.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport \"./scrub.css\";\n\nexport type ScrubNumberProps = {\n  value: number;\n  onChange: (n: number) => void;\n  min: number;\n  max: number;\n  step?: number;\n  /** Accessible label for the range input. */\n  label: string;\n  /** Formats the displayed value; defaults to String(value). */\n  format?: (n: number) => string;\n  /** The letter or word that doubles as the drag handle. */\n  handle: string;\n};\n\n/**\n * A Tangle-style inline control: the variable itself is a drag handle, and a\n * compact range input sits inline with the text for pointer and keyboard use.\n */\nexport function ScrubNumber({\n  value,\n  onChange,\n  min,\n  max,\n  step = 1,\n  label,\n  format,\n  handle,\n}: ScrubNumberProps) {\n  const id = React.useId();\n  const drag = React.useRef<{ x: number; v: number } | null>(null);\n  const text = format ? format(value) : String(value);\n\n  const clamp = (n: number) => Math.min(max, Math.max(min, Math.round(n / step) * step));\n\n  const onPointerDown = (e: React.PointerEvent) => {\n    (e.target as HTMLElement).setPointerCapture(e.pointerId);\n    drag.current = { x: e.clientX, v: value };\n  };\n  const onPointerMove = (e: React.PointerEvent) => {\n    if (!drag.current) return;\n    const perPx = (max - min) / 320;\n    onChange(clamp(drag.current.v + (e.clientX - drag.current.x) * perPx));\n  };\n  const onPointerUp = () => {\n    drag.current = null;\n  };\n\n  return (\n    <span className=\"moco-scrub\">\n      <span\n        className=\"moco-scrub-handle\"\n        onPointerDown={onPointerDown}\n        onPointerMove={onPointerMove}\n        onPointerUp={onPointerUp}\n        onPointerCancel={onPointerUp}\n        aria-hidden=\"true\"\n      >\n        {handle}\n      </span>\n      <label className=\"moco-sr-only\" htmlFor={id}>\n        {label}\n      </label>\n      <input\n        id={id}\n        className=\"moco-scrub-mini\"\n        type=\"range\"\n        min={min}\n        max={max}\n        step={step}\n        value={value}\n        aria-valuetext={`${label}: ${text}`}\n        onChange={(e) => onChange(Number(e.target.value))}\n      />\n      <span className=\"moco-num\">{text}</span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "registry/scrub/scrub.css",
+      "type": "registry:file",
+      "target": "components/moco/scrub.css",
+      "content": "/* Mono + tabular figures so the number doesn't jitter while scrubbing. */\n.moco-scrub {\n  display: inline-flex;\n  align-items: center;\n  gap: 0.35rem;\n  vertical-align: baseline;\n  white-space: nowrap;\n  font-family: var(--moco-mono);\n  font-variant-numeric: tabular-nums;\n}\n\n.moco-scrub-handle {\n  color: var(--moco-accent-dk);\n  cursor: ew-resize;\n  border-bottom: 1px dashed var(--moco-accent-dk);\n  touch-action: none;\n  user-select: none;\n}\n\ninput[type=\"range\"].moco-scrub-mini {\n  -webkit-appearance: none;\n  appearance: none;\n  width: 76px;\n  height: 16px;\n  background: transparent;\n  vertical-align: middle;\n  cursor: ew-resize;\n}\n\n@media (min-width: 560px) {\n  input[type=\"range\"].moco-scrub-mini {\n    width: 88px;\n  }\n}\n\ninput[type=\"range\"].moco-scrub-mini::-webkit-slider-runnable-track {\n  height: 1px;\n  background: var(--moco-line);\n}\ninput[type=\"range\"].moco-scrub-mini::-moz-range-track {\n  height: 1px;\n  background: var(--moco-line);\n}\ninput[type=\"range\"].moco-scrub-mini::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  width: 10px;\n  height: 10px;\n  margin-top: -4.5px;\n  border-radius: 999px;\n  background: var(--moco-accent-dk);\n}\ninput[type=\"range\"].moco-scrub-mini::-moz-range-thumb {\n  width: 10px;\n  height: 10px;\n  border: none;\n  border-radius: 999px;\n  background: var(--moco-accent-dk);\n}\n\n.moco-num {\n  font-family: var(--moco-mono);\n  font-variant-numeric: tabular-nums;\n  color: var(--moco-ink);\n  font-weight: 600;\n  font-size: 0.94em;\n}\n\n.moco-sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  white-space: nowrap;\n  border: 0;\n}\n"
+    }
+  ],
+  "docs": "\"use client\";\n\nimport * as React from \"react\";\nimport { ScrubNumber } from \"./scrub\";\n\nconst usd = (n: number) =>\n  `$${n.toLocaleString(\"en-US\", { maximumFractionDigits: 0 })}`;\n\nexport default function ScrubDemo() {\n  const [reqs, setReqs] = React.useState(2_000);\n  const perMonth = reqs * 30 * 0.042;\n\n  return (\n    <p style={{ fontFamily: \"var(--moco-serif)\", color: \"var(--moco-body)\" }} aria-live=\"polite\">\n      Suppose{\" \"}\n      <ScrubNumber\n        handle=\"n\"\n        label=\"requests per day\"\n        value={reqs}\n        min={50}\n        max={50_000}\n        step={50}\n        format={(v) => `${v.toLocaleString(\"en-US\")} requests`}\n        onChange={setReqs}\n      />{\" \"}\n      a day hit the same prompt — that is{\" \"}\n      <b className=\"moco-num\">{usd(perMonth)}</b> a month.\n    </p>\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "number",
+      "input",
+      "drag",
+      "inline",
+      "interactive"
+    ]
+  }
+}

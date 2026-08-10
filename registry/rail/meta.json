@@ -1,0 +1,9 @@
+{
+  "name": "rail",
+  "title": "Rail",
+  "description": "Left-edge section minimap: one tick per heading, active-section highlight, labels on hover. Hidden below 1280px.",
+  "tags": ["navigation", "scrollspy", "toc"],
+  "dependencies": [],
+  "registryDependencies": ["tokens", "hooks"],
+  "files": ["rail.tsx", "rail.css"]
+}

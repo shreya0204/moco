@@ -1,0 +1,97 @@
+.moco-scrolly {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 3rem;
+  align-items: start;
+  margin-block: 4rem;
+  /* Fills its container. Give it a wide one — the pinned figure plus a
+     420px prose rail want room to breathe. */
+  width: 100%;
+}
+
+.moco-scrolly-figure {
+  position: sticky;
+  top: 22vh;
+  max-height: 62vh;
+}
+
+.moco-scrolly-steps {
+  display: grid;
+  gap: 45vh;
+  padding: 25vh 0;
+}
+
+.moco-scrolly-step {
+  transition: opacity 350ms var(--moco-ease);
+  opacity: 0.4;
+}
+
+.moco-scrolly-step[data-on="true"] {
+  opacity: 1;
+}
+
+.moco-scrolly-inline {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .moco-scrolly {
+    display: block;
+  }
+  .moco-scrolly-figure {
+    display: none;
+  }
+  .moco-scrolly-steps {
+    display: block;
+    padding: 0;
+  }
+  .moco-scrolly-step {
+    opacity: 1;
+    margin-bottom: 3rem;
+  }
+  .moco-scrolly-inline {
+    display: block;
+    margin-bottom: 1rem;
+  }
+}
+
+/* No-JS: show every step and the static figure. Consumers set `no-js` on
+   <html> and remove it with JS. */
+.no-js .moco-scrolly-step {
+  opacity: 1;
+}
+
+/* Figure plate the rendered snapshots sit on. */
+.moco-plate {
+  position: relative;
+  background: var(--moco-panel);
+  border-radius: 2px;
+  padding: 2rem 1.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-image: radial-gradient(120% 90% at 50% 0%, rgba(0, 0, 0, 0.028), transparent 70%);
+}
+
+.moco-plate::-webkit-scrollbar {
+  height: 6px;
+}
+.moco-plate::-webkit-scrollbar-thumb {
+  background: var(--moco-line);
+  border-radius: 3px;
+}
+
+@media (max-width: 720px) {
+  .moco-plate {
+    padding: 1.25rem 1rem;
+    -webkit-mask-image: linear-gradient(to right, #000 93%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 93%, transparent 100%);
+  }
+}
+
+.moco-step-cap {
+  color: var(--moco-muted);
+  font-size: 13px;
+  margin-top: 1rem;
+  min-height: 2.6em;
+}

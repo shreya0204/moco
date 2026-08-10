@@ -1,0 +1,9 @@
+{
+  "name": "math",
+  "title": "Math Block",
+  "description": "Display equation with a plain-English restatement and a 'show the math' derivation disclosure. Children are typically KaTeX/MathML output — katex is an optional peer, not imported here.",
+  "tags": ["math", "prose", "disclosure"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["math.tsx", "math.css"]
+}

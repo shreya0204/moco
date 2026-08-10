@@ -1,0 +1,121 @@
+/* margin-block, not the shorthand — `.moco-breakout` owns margin-left. */
+.moco-plate-wrap {
+  margin-block: 3rem;
+}
+
+/* Break out of a centred prose column. Override --moco-figure-wide to tune. */
+.moco-breakout {
+  width: min(var(--moco-figure-wide, 1080px), calc(100vw - 3rem));
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 560px) {
+  .moco-breakout {
+    width: calc(100vw - 2.5rem);
+  }
+}
+
+.moco-plate {
+  position: relative;
+  background: var(--moco-panel);
+  border-radius: 2px;
+  padding: 2rem 1.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-image: radial-gradient(120% 90% at 50% 0%, rgba(0, 0, 0, 0.028), transparent 70%);
+}
+
+.moco-plate::-webkit-scrollbar {
+  height: 6px;
+}
+.moco-plate::-webkit-scrollbar-thumb {
+  background: var(--moco-line);
+  border-radius: 3px;
+}
+
+@media (max-width: 720px) {
+  .moco-plate {
+    padding: 1.25rem 1rem;
+    -webkit-mask-image: linear-gradient(to right, #000 93%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 93%, transparent 100%);
+  }
+}
+
+figcaption.moco-cap {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--moco-muted);
+  max-width: 680px;
+  font-family: var(--moco-serif);
+  font-variant-numeric: normal;
+  letter-spacing: 0;
+}
+
+/* The run-in phrase stays mono — it's a label, and the contrast against the
+   serif explanation is what makes captions scannable. */
+figcaption.moco-cap .moco-lead-in,
+table.moco-ed caption .moco-lead-in {
+  font-family: var(--moco-mono);
+  font-size: 0.88em;
+  color: var(--moco-ink);
+  font-weight: 500;
+}
+
+table.moco-ed {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+table.moco-ed caption {
+  caption-side: bottom;
+  text-align: left;
+  margin-top: 0.9rem;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--moco-muted);
+  font-family: var(--moco-serif);
+  font-variant-numeric: normal;
+  letter-spacing: 0;
+}
+
+table.moco-ed th {
+  font-weight: 400;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--moco-faint);
+  text-align: left;
+  padding: 0 0.75rem 0.6rem 0;
+  border-bottom: 1px solid var(--moco-line);
+  white-space: nowrap;
+}
+
+table.moco-ed td {
+  padding: 0.55rem 0.75rem 0.55rem 0;
+  border-bottom: 1px solid var(--moco-line);
+  color: var(--moco-body);
+}
+
+table.moco-ed th.moco-n,
+table.moco-ed td.moco-n {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+table.moco-ed tr[data-best="true"] td {
+  color: var(--moco-ink);
+  font-weight: 700;
+}
+
+table.moco-ed tr.moco-summary td {
+  border-top: 1px solid var(--moco-muted);
+  border-bottom: none;
+  color: var(--moco-ink);
+  padding-top: 0.75rem;
+}

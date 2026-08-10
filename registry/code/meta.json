@@ -1,0 +1,10 @@
+{
+  "name": "code",
+  "title": "Code",
+  "description": "Shiki-highlighted code windows: tabbed snippets with crossfade, and an annotated walkthrough with bidirectional linked highlighting.",
+  "tags": ["code", "shiki", "syntax-highlighting", "tabs", "walkthrough"],
+  "framework": "next",
+  "dependencies": ["shiki"],
+  "registryDependencies": ["tokens"],
+  "files": ["code.tsx", "code-client.tsx", "code.css"]
+}

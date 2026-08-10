@@ -1,0 +1,9 @@
+{
+  "name": "scrub",
+  "title": "Scrub Number",
+  "description": "Tangle-style inline number scrubber: drag the variable itself, with a compact range input for pointer and keyboard access.",
+  "tags": ["number", "input", "drag", "inline", "interactive"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["scrub.tsx", "scrub.css"]
+}

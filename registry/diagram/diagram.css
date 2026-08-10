@@ -1,0 +1,177 @@
+.moco-dgm {
+  display: grid;
+  gap: 1.1rem;
+  min-width: 460px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.moco-dgm-row {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.moco-dgm-row-label {
+  color: var(--moco-faint);
+  font-size: 12px;
+  text-align: right;
+  letter-spacing: 0.02em;
+}
+
+.moco-dgm-track {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.moco-dgm-block {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid var(--moco-line);
+  border-radius: 2px;
+  padding: 0.5rem 0.6rem;
+  background: var(--moco-bg);
+  color: var(--moco-body);
+  text-align: left;
+  transition:
+    opacity 200ms var(--moco-ease),
+    border-color 200ms var(--moco-ease),
+    background 200ms var(--moco-ease),
+    color 200ms var(--moco-ease);
+}
+
+.moco-dgm-block .moco-b-label {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.moco-dgm-block .moco-b-sub {
+  display: block;
+  color: var(--moco-faint);
+  font-size: 11.5px;
+  margin-top: 2px;
+}
+
+.moco-dgm-block[data-variant="active"] {
+  background: var(--moco-accent);
+  border-color: var(--moco-accent);
+  color: var(--moco-on-accent);
+}
+/* Sits on the lime fill in both themes, so the dark ink is safe hardcoded. */
+.moco-dgm-block[data-variant="active"] .moco-b-sub {
+  color: rgba(20, 24, 10, 0.72);
+}
+
+.moco-dgm-block[data-variant="warn"] {
+  border-color: var(--moco-warn);
+  color: var(--moco-warn);
+  background: var(--moco-warn-wash);
+}
+.moco-dgm-block[data-variant="warn"] .moco-b-sub {
+  color: var(--moco-warn);
+  opacity: 0.72;
+}
+
+.moco-dgm-block[data-variant="dashed"] {
+  border-style: dashed;
+  background: transparent;
+  color: var(--moco-faint);
+}
+
+.moco-dgm-block[data-variant="ghost"] {
+  border-color: transparent;
+  background: transparent;
+  color: var(--moco-faint);
+}
+
+/* Hover: dim siblings. */
+.moco-dgm-track:has(.moco-dgm-block:hover) .moco-dgm-block:not(:hover),
+.moco-dgm-track:has(.moco-dgm-block:focus-visible) .moco-dgm-block:not(:focus-visible) {
+  opacity: 0.4;
+}
+
+.moco-dgm-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 5;
+  width: max-content;
+  max-width: 240px;
+  background: var(--moco-bg);
+  border: 1px solid var(--moco-line);
+  border-radius: 2px;
+  padding: 0.45rem 0.6rem;
+  font-size: 12px;
+  color: var(--moco-muted);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms var(--moco-ease);
+}
+
+.moco-dgm-block:hover .moco-dgm-tip,
+.moco-dgm-block:focus-visible .moco-dgm-tip {
+  opacity: 1;
+}
+
+.moco-dgm-diamond {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--moco-accent-dk);
+  transform: rotate(45deg);
+  display: inline-block;
+  margin: 0 0.4rem;
+  flex: none;
+}
+
+.moco-dgm-bracket {
+  border-top: 1px solid var(--moco-line);
+  border-left: 1px solid var(--moco-line);
+  border-right: 1px solid var(--moco-line);
+  height: 8px;
+  margin-top: 4px;
+}
+
+.moco-dgm-bracket-cap {
+  font-size: 12px;
+  color: var(--moco-faint);
+  text-align: center;
+  margin-top: 6px;
+}
+
+.moco-dgm-note {
+  color: var(--moco-faint);
+  font-size: 12px;
+  grid-column: 2;
+}
+
+.moco-dgm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  font-size: 12px;
+  color: var(--moco-faint);
+  border-top: 1px solid var(--moco-line);
+  padding-top: 0.9rem;
+}
+
+.moco-dgm-legend span.moco-sw {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border: 1px solid currentColor;
+  margin-right: 0.45rem;
+  vertical-align: -1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moco-dgm-block,
+  .moco-dgm-tip {
+    transition-duration: 0.001ms;
+  }
+}

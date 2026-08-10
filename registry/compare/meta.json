@@ -1,0 +1,9 @@
+{
+  "name": "compare",
+  "title": "Compare",
+  "description": "Before/after clip-path wipe with pointer, keyboard, and slider-role support.",
+  "tags": ["figure", "interactive", "slider"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["compare.tsx", "compare.css"]
+}

@@ -1,0 +1,169 @@
+/* ── notes scope ─────────────────────────────────────────────────────────────
+   Positioned, because margin notes hang off its right edge. Wrap the prose
+   column in this — it holds the note counter and is the only reliable
+   ancestor when a renderer emits headings and paragraphs as flat siblings. */
+.moco-notes-scope {
+  position: relative;
+  counter-reset: moco-note;
+}
+
+/* ── sidenotes ─────────────────────────────────────────────────────────── */
+
+.moco-note {
+  counter-increment: moco-note;
+}
+
+.moco-noteref {
+  color: var(--moco-accent-dk);
+  font-size: 0.72em;
+  vertical-align: super;
+  line-height: 0;
+  padding: 0 0.1em;
+}
+
+.moco-noteref::after {
+  content: counter(moco-note);
+}
+
+.moco-sidenote-num::before {
+  content: counter(moco-note);
+  color: var(--moco-accent-dk);
+  font-size: 0.8em;
+  vertical-align: super;
+  line-height: 0;
+  margin-right: 0.25em;
+}
+
+.moco-sidenote {
+  font-family: var(--moco-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--moco-muted);
+}
+
+/* The inline disclosure is the default everywhere — it needs no room and no
+   positioned ancestor, so it can't escape whatever contains it. */
+.moco-sidenote-wrap {
+  display: block;
+  margin: 0.25rem 0 1rem;
+}
+
+.moco-sidenote-body {
+  display: block;
+  border-left: 1px solid var(--moco-line);
+  padding-left: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.moco-sidenote-body[data-open="false"] {
+  display: none;
+}
+
+.moco-sidenote-body .moco-desktop-only {
+  display: none;
+}
+
+.moco-sidenote-toggle {
+  font: inherit;
+  font-family: var(--moco-mono);
+  font-size: 12px;
+  color: var(--moco-faint);
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--moco-line);
+  padding: 0;
+  cursor: pointer;
+}
+
+/* The true margin note is an upgrade: it needs the prose column's right
+   gutter, which only `.moco-notes-scope` provides. Outside it there is
+   nothing to hang off, and the note would anchor to the viewport. */
+@media (min-width: 1280px) {
+  .moco-notes-scope .moco-sidenote-wrap {
+    position: absolute;
+    left: calc(100% + 2rem);
+    width: 240px;
+    /* --moco-note-shift is set by the component's collision pass, pushing a
+       note below its predecessor when two anchors sit close together. */
+    margin: calc(-0.4rem + var(--moco-note-shift, 0px)) 0 0;
+  }
+  .moco-notes-scope .moco-sidenote-toggle {
+    display: none;
+  }
+  .moco-notes-scope .moco-sidenote-body {
+    display: block;
+    border-left: 0;
+    padding-left: 0;
+    margin-top: 0;
+  }
+  .moco-notes-scope .moco-sidenote-body .moco-desktop-only {
+    display: inline;
+  }
+}
+
+/* With JS off the toggle can't fire, so never hide the note. Add `moco-no-js`
+   to <html> (and remove it from an inline script) to opt in. */
+.moco-no-js .moco-sidenote-body[data-open="false"] {
+  display: block;
+}
+
+/* ── term tooltip ──────────────────────────────────────────────────────── */
+
+.moco-term {
+  position: relative;
+  border-bottom: 1px dotted var(--moco-faint);
+  cursor: help;
+}
+
+.moco-term-pop {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  width: max-content;
+  max-width: min(280px, 70vw);
+  background: var(--moco-bg);
+  border: 1px solid var(--moco-line);
+  border-radius: 2px;
+  padding: 0.55rem 0.7rem;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--moco-muted);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms var(--moco-ease);
+}
+
+.moco-term-pop[data-flip="true"] {
+  left: auto;
+  right: 0;
+}
+
+.moco-term:hover .moco-term-pop,
+.moco-term:focus-visible .moco-term-pop,
+.moco-term:focus-within .moco-term-pop {
+  opacity: 1;
+}
+
+/* On narrow screens an anchored popover can't be kept on screen without JS,
+   so the definition becomes an inline disclosure instead — the same treatment
+   sidenotes get at this width. */
+@media (max-width: 1023px) {
+  .moco-term-pop {
+    position: static;
+    display: none;
+    opacity: 1;
+    max-width: 100%;
+    margin: 0.4rem 0;
+  }
+  .moco-term:hover .moco-term-pop,
+  .moco-term:focus-within .moco-term-pop {
+    display: inline-block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moco-term-pop {
+    transition-duration: 0.001ms;
+  }
+}

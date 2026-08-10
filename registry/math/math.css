@@ -1,0 +1,52 @@
+.moco-math-block {
+  margin: 2.5rem 0;
+}
+
+.moco-math-head {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.moco-math-plain {
+  font-family: var(--moco-serif);
+  color: var(--moco-muted);
+  font-size: 13.5px;
+  text-align: center;
+  margin-top: 0.4rem;
+}
+
+.moco-math-deriv {
+  font-family: var(--moco-serif);
+  border: 1px solid var(--moco-line);
+  border-radius: 2px;
+  padding: 1rem 1.15rem;
+  margin-top: 1rem;
+  font-size: 13.5px;
+  color: var(--moco-muted);
+  background: var(--moco-panel);
+}
+
+.moco-btn-sm {
+  font: inherit;
+  border: 1px solid var(--moco-line);
+  border-radius: 2px;
+  padding: 0.2rem 0.6rem;
+  font-size: 12px;
+  color: var(--moco-muted);
+  background: var(--moco-bg);
+  cursor: pointer;
+  transition:
+    color 150ms var(--moco-ease),
+    border-color 150ms var(--moco-ease);
+}
+
+.moco-btn-sm:hover {
+  color: var(--moco-accent-dk);
+  border-color: var(--moco-accent-dk);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moco-btn-sm {
+    transition-duration: 0.001ms;
+  }
+}

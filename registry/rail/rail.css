@@ -1,0 +1,73 @@
+.moco-rail {
+  position: fixed;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0.5rem 0;
+}
+
+.moco-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 14px;
+  /* Button reset the host app may not provide. */
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.moco-rail-tick {
+  display: block;
+  height: 1px;
+  width: 18px;
+  background: var(--moco-muted);
+  opacity: 0.4;
+  flex: none;
+  transition:
+    width 300ms var(--moco-ease),
+    opacity 300ms var(--moco-ease),
+    background 300ms var(--moco-ease);
+}
+
+.moco-rail-item[aria-current="true"] .moco-rail-tick {
+  width: 30px;
+  opacity: 1;
+  height: 2px;
+  background: var(--moco-accent-dk);
+}
+
+.moco-rail-label {
+  font-size: 12px;
+  color: var(--moco-faint);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 250ms var(--moco-ease),
+    transform 250ms var(--moco-ease);
+  pointer-events: none;
+}
+
+.moco-rail:hover .moco-rail-label,
+.moco-rail:focus-within .moco-rail-label {
+  opacity: 1;
+  transform: none;
+}
+
+.moco-rail-item[aria-current="true"] .moco-rail-label {
+  color: var(--moco-ink);
+}
+
+@media (max-width: 1279px) {
+  .moco-rail {
+    display: none;
+  }
+}

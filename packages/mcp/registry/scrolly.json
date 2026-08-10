@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scrolly",
+  "type": "registry:component",
+  "title": "Scrolly Stage",
+  "description": "Scrollytelling stage: a pinned figure that updates as prose steps scroll past, unpinning below 1024px.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/scrolly/scrolly.tsx",
+      "type": "registry:component",
+      "target": "components/moco/scrolly.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport \"./scrolly.css\";\n\nexport interface StepShape {\n  key: string;\n  caption: string;\n  text: React.ReactNode;\n}\n\nexport interface ScrollyStageProps<S extends StepShape> {\n  steps: S[];\n  render: (step: S, index: number, progress: number) => React.ReactNode;\n  initial?: number;\n}\n\n/**\n * A figure that pins to the viewport while prose steps scroll past it.\n * Below 1024px it un-pins and each step renders its own static snapshot.\n * With JS off, every step is visible and the figure shows the final state\n * (add a `no-js` class to <html> and remove it with JS to get that fallback).\n */\nexport function ScrollyStage<S extends StepShape>({\n  steps,\n  render,\n  initial = 0,\n}: ScrollyStageProps<S>) {\n  const [active, setActive] = React.useState(initial);\n  const refs = React.useRef<(HTMLDivElement | null)[]>([]);\n\n  React.useEffect(() => {\n    const io = new IntersectionObserver(\n      (entries) => {\n        for (const e of entries) {\n          if (!e.isIntersecting) continue;\n          const i = Number((e.target as HTMLElement).dataset.step);\n          if (!Number.isNaN(i)) setActive(i);\n        }\n      },\n      // Fire when a step crosses the middle band of the viewport.\n      { rootMargin: \"-45% 0px -45% 0px\", threshold: 0 },\n    );\n    refs.current.forEach((el) => el && io.observe(el));\n    return () => io.disconnect();\n  }, [steps.length]);\n\n  const current = steps[Math.min(active, steps.length - 1)];\n\n  return (\n    <div className=\"moco-scrolly\">\n      <div className=\"moco-scrolly-figure\" aria-hidden=\"true\">\n        <div className=\"moco-plate\">\n          {render(current, active, active / Math.max(1, steps.length - 1))}\n        </div>\n        <p className=\"moco-step-cap\">{current.caption}</p>\n      </div>\n\n      <div className=\"moco-scrolly-steps\">\n        {steps.map((s, i) => (\n          <div\n            key={s.key}\n            data-step={i}\n            data-on={i === active}\n            className=\"moco-scrolly-step\"\n            ref={(el) => {\n              refs.current[i] = el;\n            }}\n          >\n            {/* Mobile / no-JS snapshot, above its own paragraph. */}\n            <div className=\"moco-scrolly-inline\">\n              <div className=\"moco-plate\">\n                {render(s, i, i / Math.max(1, steps.length - 1))}\n              </div>\n              <p className=\"moco-step-cap\">{s.caption}</p>\n            </div>\n            <div>{s.text}</div>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "registry/scrolly/scrolly.css",
+      "type": "registry:file",
+      "target": "components/moco/scrolly.css",
+      "content": ".moco-scrolly {\n  position: relative;\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);\n  gap: 3rem;\n  align-items: start;\n  margin-block: 4rem;\n  /* Fills its container. Give it a wide one — the pinned figure plus a\n     420px prose rail want room to breathe. */\n  width: 100%;\n}\n\n.moco-scrolly-figure {\n  position: sticky;\n  top: 22vh;\n  max-height: 62vh;\n}\n\n.moco-scrolly-steps {\n  display: grid;\n  gap: 45vh;\n  padding: 25vh 0;\n}\n\n.moco-scrolly-step {\n  transition: opacity 350ms var(--moco-ease);\n  opacity: 0.4;\n}\n\n.moco-scrolly-step[data-on=\"true\"] {\n  opacity: 1;\n}\n\n.moco-scrolly-inline {\n  display: none;\n}\n\n@media (max-width: 1023px) {\n  .moco-scrolly {\n    display: block;\n  }\n  .moco-scrolly-figure {\n    display: none;\n  }\n  .moco-scrolly-steps {\n    display: block;\n    padding: 0;\n  }\n  .moco-scrolly-step {\n    opacity: 1;\n    margin-bottom: 3rem;\n  }\n  .moco-scrolly-inline {\n    display: block;\n    margin-bottom: 1rem;\n  }\n}\n\n/* No-JS: show every step and the static figure. Consumers set `no-js` on\n   <html> and remove it with JS. */\n.no-js .moco-scrolly-step {\n  opacity: 1;\n}\n\n/* Figure plate the rendered snapshots sit on. */\n.moco-plate {\n  position: relative;\n  background: var(--moco-panel);\n  border-radius: 2px;\n  padding: 2rem 1.75rem;\n  overflow-x: auto;\n  overflow-y: hidden;\n  background-image: radial-gradient(120% 90% at 50% 0%, rgba(0, 0, 0, 0.028), transparent 70%);\n}\n\n.moco-plate::-webkit-scrollbar {\n  height: 6px;\n}\n.moco-plate::-webkit-scrollbar-thumb {\n  background: var(--moco-line);\n  border-radius: 3px;\n}\n\n@media (max-width: 720px) {\n  .moco-plate {\n    padding: 1.25rem 1rem;\n    -webkit-mask-image: linear-gradient(to right, #000 93%, transparent 100%);\n    mask-image: linear-gradient(to right, #000 93%, transparent 100%);\n  }\n}\n\n.moco-step-cap {\n  color: var(--moco-muted);\n  font-size: 13px;\n  margin-top: 1rem;\n  min-height: 2.6em;\n}\n"
+    }
+  ],
+  "docs": "import { ScrollyStage, type StepShape } from \"./scrolly\";\n\nconst STEPS: StepShape[] = [\n  {\n    key: \"one\",\n    caption: \"Step one: the figure shows state A.\",\n    text: <p>Scroll down. The pinned figure on the right tracks whichever step crosses the middle of the viewport.</p>,\n  },\n  {\n    key: \"two\",\n    caption: \"Step two: the figure shows state B.\",\n    text: <p>Each step is just prose plus a key and caption — the figure is whatever the render prop returns.</p>,\n  },\n  {\n    key: \"three\",\n    caption: \"Step three: the figure shows state C.\",\n    text: <p>Below 1024px the figure unpins and each step renders its own inline snapshot instead.</p>,\n  },\n];\n\nexport default function ScrollyDemo() {\n  return (\n    <ScrollyStage\n      steps={STEPS}\n      render={(step, i, progress) => (\n        <div\n          style={{\n            display: \"grid\",\n            placeItems: \"center\",\n            height: 160,\n            fontFamily: \"var(--moco-mono)\",\n            color: \"var(--moco-ink)\",\n          }}\n        >\n          {step.key} — {Math.round(progress * 100)}%\n        </div>\n      )}\n    />\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "figure",
+      "scrollytelling",
+      "layout"
+    ]
+  }
+}

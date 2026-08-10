@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "view-transitions",
+  "type": "registry:component",
+  "title": "View Transitions",
+  "description": "Cross-fade View Transitions for Next.js App Router route changes, plus a no-js flag remover.",
+  "framework": "next",
+  "dependencies": [
+    "next"
+  ],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/view-transitions/view-transitions.tsx",
+      "type": "registry:component",
+      "target": "components/moco/view-transitions.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { useRouter } from \"next/navigation\";\nimport \"./view-transitions.css\";\n\n/**\n * View Transitions for client-side route changes (Next.js App Router only).\n * Feature-detected, and a complete no-op where unsupported or under\n * prefers-reduced-motion.\n *\n * ponytail: the transition is closed on a short timer rather than on the\n * router's commit, because App Router does not expose a navigation-complete\n * promise. Swap the timer for that promise if/when Next exposes one.\n */\nexport function ViewTransitions() {\n  const router = useRouter();\n\n  React.useEffect(() => {\n    const doc = document as Document & {\n      startViewTransition?: (cb: () => void | Promise<void>) => unknown;\n    };\n    if (typeof doc.startViewTransition !== \"function\") return;\n    if (window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) return;\n\n    const onClick = (e: MouseEvent) => {\n      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)\n        return;\n      const a = (e.target as HTMLElement | null)?.closest?.(\"a\");\n      if (!a || a.target === \"_blank\" || a.hasAttribute(\"download\")) return;\n      const url = new URL(a.href, location.href);\n      if (url.origin !== location.origin) return;\n      if (url.pathname === location.pathname) return;\n\n      e.preventDefault();\n      doc.startViewTransition!(async () => {\n        router.push(url.pathname + url.search + url.hash);\n        await new Promise((r) => setTimeout(r, 90));\n      });\n    };\n\n    document.addEventListener(\"click\", onClick);\n    return () => document.removeEventListener(\"click\", onClick);\n  }, [router]);\n\n  return null;\n}\n\n/** Removes the `no-js` class so JS-only affordances can hide their fallbacks. */\nexport function JsFlag() {\n  React.useEffect(() => {\n    document.documentElement.classList.remove(\"no-js\");\n  }, []);\n  return null;\n}\n"
+    },
+    {
+      "path": "registry/view-transitions/view-transitions.css",
+      "type": "registry:file",
+      "target": "components/moco/view-transitions.css",
+      "content": "/* View transitions + reduced motion. The pseudo-elements are page-global by\n   spec, so there is nothing to class-prefix here. */\n\n@media (prefers-reduced-motion: no-preference) {\n  ::view-transition-old(root),\n  ::view-transition-new(root) {\n    animation-duration: 250ms;\n  }\n}\n\n/* Belt-and-braces: the JS already no-ops under reduced motion, but this also\n   kills transitions the browser starts itself (e.g. back/forward). */\n@media (prefers-reduced-motion: reduce) {\n  ::view-transition-group(*),\n  ::view-transition-old(*),\n  ::view-transition-new(*) {\n    animation: none !important;\n  }\n}\n"
+    }
+  ],
+  "docs": "import { ViewTransitions, JsFlag } from \"./view-transitions\";\n\n/* Mount once, near the root of a Next.js app layout. Both render null;\n   internal <a> link clicks then animate via the View Transitions API. */\nexport default function ViewTransitionsDemo() {\n  return (\n    <>\n      <ViewTransitions />\n      <JsFlag />\n      <nav>\n        <a href=\"/\">Home</a> <a href=\"/about\">About</a>\n      </nav>\n    </>\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "navigation",
+      "animation",
+      "next",
+      "behavior"
+    ]
+  }
+}

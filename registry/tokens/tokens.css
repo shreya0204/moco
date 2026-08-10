@@ -1,0 +1,67 @@
+/* moco/ui — design tokens.
+   One-time setup: import this once (e.g. in your root layout / global css).
+   Every moco component styles itself exclusively from these variables —
+   override any of them to retheme the whole library.
+
+   Light: warm paper, near-black ink, lime accent (fill-only on paper — the
+   dark lime --moco-accent-dk does text/stroke duty at 4.9:1).
+   Dark: warm near-black, paper ink, lime works as both fill and text. */
+
+:root {
+  --moco-bg: #fcfbf9;
+  --moco-panel: #f4f2ee;
+  --moco-ink: rgba(0, 0, 0, 0.88);
+  --moco-body: rgba(0, 0, 0, 0.76);
+  --moco-muted: rgba(0, 0, 0, 0.6);
+  --moco-faint: rgba(0, 0, 0, 0.48);
+  --moco-line: rgba(0, 0, 0, 0.12);
+  --moco-accent: #c6f24e;
+  --moco-accent-dk: #5b770c;
+  --moco-on-accent: #14180a;
+  --moco-warn: #b8437a;
+  --moco-accent-wash: rgba(198, 242, 78, 0.34);
+  --moco-warn-wash: rgba(184, 67, 122, 0.1);
+  --moco-hover-wash: rgba(0, 0, 0, 0.04);
+  --moco-ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+  --moco-serif: ui-serif, Georgia, "Times New Roman", serif;
+  --moco-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --moco-sans: ui-sans-serif, system-ui, sans-serif;
+  --moco-display: ui-serif, Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --moco-bg: #121110;
+    --moco-panel: #1d1c19;
+    --moco-ink: rgba(255, 255, 255, 0.92);
+    --moco-body: rgba(255, 255, 255, 0.78);
+    --moco-muted: rgba(255, 255, 255, 0.6);
+    --moco-faint: rgba(255, 255, 255, 0.45);
+    --moco-line: rgba(255, 255, 255, 0.14);
+    --moco-accent: #c6f24e;
+    --moco-accent-dk: #c6f24e;
+    --moco-on-accent: #14180a;
+    --moco-warn: #e06ba0;
+    --moco-accent-wash: rgba(198, 242, 78, 0.16);
+    --moco-warn-wash: rgba(224, 107, 160, 0.14);
+    --moco-hover-wash: rgba(255, 255, 255, 0.06);
+  }
+}
+
+[data-theme="dark"] {
+  --moco-bg: #121110;
+  --moco-panel: #1d1c19;
+  --moco-ink: rgba(255, 255, 255, 0.92);
+  --moco-body: rgba(255, 255, 255, 0.78);
+  --moco-muted: rgba(255, 255, 255, 0.6);
+  --moco-faint: rgba(255, 255, 255, 0.45);
+  --moco-line: rgba(255, 255, 255, 0.14);
+  --moco-accent: #c6f24e;
+  --moco-accent-dk: #c6f24e;
+  --moco-on-accent: #14180a;
+  --moco-warn: #e06ba0;
+  --moco-accent-wash: rgba(198, 242, 78, 0.16);
+  --moco-warn-wash: rgba(224, 107, 160, 0.14);
+  --moco-hover-wash: rgba(255, 255, 255, 0.06);
+}

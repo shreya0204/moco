@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "zoom",
+  "type": "registry:component",
+  "title": "Zoom",
+  "description": "Lightbox affordance for figures — Esc, click-outside, focus restore, and scroll lock included.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/zoom/zoom.tsx",
+      "type": "registry:component",
+      "target": "components/moco/zoom.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { createPortal } from \"react-dom\";\nimport \"./zoom.css\";\n\nexport interface ZoomProps {\n  children: React.ReactNode;\n  caption?: React.ReactNode;\n}\n\n/** Lightbox affordance. Esc and click-outside close it. */\nexport function Zoom({ children, caption }: ZoomProps) {\n  const [open, setOpen] = React.useState(false);\n  const [mounted, setMounted] = React.useState(false);\n  const opener = React.useRef<HTMLButtonElement>(null);\n\n  React.useEffect(() => setMounted(true), []);\n\n  React.useEffect(() => {\n    if (!open) return;\n    const onKey = (e: KeyboardEvent) => e.key === \"Escape\" && setOpen(false);\n    document.addEventListener(\"keydown\", onKey);\n    const prev = document.body.style.overflow;\n    document.body.style.overflow = \"hidden\";\n    return () => {\n      document.removeEventListener(\"keydown\", onKey);\n      document.body.style.overflow = prev;\n      opener.current?.focus();\n    };\n  }, [open]);\n\n  return (\n    <>\n      <button\n        ref={opener}\n        type=\"button\"\n        className=\"moco-plate-zoom\"\n        aria-label=\"Enlarge this figure\"\n        onClick={() => setOpen(true)}\n      >\n        ⤢\n      </button>\n      {children}\n      {mounted && open\n        ? createPortal(\n            <div\n              className=\"moco-lightbox\"\n              role=\"dialog\"\n              aria-modal=\"true\"\n              aria-label=\"Enlarged figure\"\n              onClick={(e) => e.target === e.currentTarget && setOpen(false)}\n            >\n              <div className=\"moco-lightbox-inner\">\n                {children}\n                {caption ? <figcaption className=\"moco-cap\">{caption}</figcaption> : null}\n                <button\n                  type=\"button\"\n                  className=\"moco-btn-sm\"\n                  style={{ marginTop: \"1rem\" }}\n                  onClick={() => setOpen(false)}\n                >\n                  Close (Esc)\n                </button>\n              </div>\n            </div>,\n            document.body,\n          )\n        : null}\n    </>\n  );\n}\n"
+    },
+    {
+      "path": "registry/zoom/zoom.css",
+      "type": "registry:file",
+      "target": "components/moco/zoom.css",
+      "content": "/* Zoom sits in the top-right corner of its nearest positioned ancestor —\n   give the figure/plate it lives in `position: relative`. */\n.moco-plate-zoom {\n  position: absolute;\n  top: 0.5rem;\n  right: 0.5rem;\n  width: 26px;\n  height: 26px;\n  display: grid;\n  place-items: center;\n  color: var(--moco-faint);\n  border: 1px solid var(--moco-line);\n  border-radius: 2px;\n  background: var(--moco-bg);\n  transition: color 150ms var(--moco-ease);\n  z-index: 2;\n}\n\n.moco-plate-zoom:hover {\n  color: var(--moco-accent-dk);\n}\n\n/* Lightbox */\n.moco-lightbox {\n  position: fixed;\n  inset: 0;\n  z-index: 90;\n  background: color-mix(in srgb, var(--moco-bg) 94%, transparent);\n  backdrop-filter: blur(6px);\n  -webkit-backdrop-filter: blur(6px);\n  display: grid;\n  place-items: center;\n  padding: 2rem 1.5rem;\n  overflow: auto;\n}\n\n.moco-lightbox-inner {\n  width: min(1200px, 100%);\n}\n\nfigcaption.moco-cap {\n  display: block;\n  margin-top: 0.9rem;\n  font-family: var(--moco-serif);\n  font-variant-numeric: normal;\n  letter-spacing: 0;\n  font-size: 14.5px;\n  line-height: 1.6;\n  color: var(--moco-muted);\n  max-width: 640px;\n}\n\n.moco-btn-sm {\n  border: 1px solid var(--moco-line);\n  border-radius: 2px;\n  padding: 0.2rem 0.6rem;\n  font-size: 12px;\n  color: var(--moco-muted);\n  background: var(--moco-bg);\n  transition:\n    color 150ms var(--moco-ease),\n    border-color 150ms var(--moco-ease);\n}\n\n.moco-btn-sm:hover {\n  color: var(--moco-accent-dk);\n  border-color: var(--moco-accent-dk);\n}\n"
+    }
+  ],
+  "docs": "\"use client\";\n\nimport { Zoom } from \"./zoom\";\n\nexport default function ZoomDemo() {\n  return (\n    <figure style={{ position: \"relative\", maxWidth: 480, margin: 0 }}>\n      <Zoom caption=\"A placeholder figure. Click ⤢ to enlarge, Esc or click outside to close.\">\n        <svg viewBox=\"0 0 320 180\" style={{ width: \"100%\", display: \"block\", background: \"var(--moco-panel)\" }} role=\"img\" aria-label=\"placeholder chart\">\n          <polyline points=\"10,150 80,90 150,120 220,50 310,70\" fill=\"none\" stroke=\"var(--moco-accent-dk)\" strokeWidth=\"2\" />\n        </svg>\n      </Zoom>\n    </figure>\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "lightbox",
+      "figure",
+      "dialog",
+      "overlay"
+    ]
+  }
+}

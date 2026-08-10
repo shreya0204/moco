@@ -1,0 +1,78 @@
+/* Mono + tabular figures so the number doesn't jitter while scrubbing. */
+.moco-scrub {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  vertical-align: baseline;
+  white-space: nowrap;
+  font-family: var(--moco-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.moco-scrub-handle {
+  color: var(--moco-accent-dk);
+  cursor: ew-resize;
+  border-bottom: 1px dashed var(--moco-accent-dk);
+  touch-action: none;
+  user-select: none;
+}
+
+input[type="range"].moco-scrub-mini {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 76px;
+  height: 16px;
+  background: transparent;
+  vertical-align: middle;
+  cursor: ew-resize;
+}
+
+@media (min-width: 560px) {
+  input[type="range"].moco-scrub-mini {
+    width: 88px;
+  }
+}
+
+input[type="range"].moco-scrub-mini::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--moco-line);
+}
+input[type="range"].moco-scrub-mini::-moz-range-track {
+  height: 1px;
+  background: var(--moco-line);
+}
+input[type="range"].moco-scrub-mini::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -4.5px;
+  border-radius: 999px;
+  background: var(--moco-accent-dk);
+}
+input[type="range"].moco-scrub-mini::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 999px;
+  background: var(--moco-accent-dk);
+}
+
+.moco-num {
+  font-family: var(--moco-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--moco-ink);
+  font-weight: 600;
+  font-size: 0.94em;
+}
+
+.moco-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

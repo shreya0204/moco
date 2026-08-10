@@ -1,0 +1,88 @@
+.moco-cmdk-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  padding: 12vh 1rem 2rem;
+}
+
+.moco-cmdk {
+  width: min(560px, 100%);
+  height: max-content;
+  max-height: 70vh;
+  background: var(--moco-bg);
+  border: 1px solid var(--moco-line);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.moco-cmdk input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--moco-line);
+  padding: 0.9rem 1rem;
+  font: inherit;
+  font-size: 14px;
+  color: var(--moco-ink);
+  outline: none;
+}
+
+.moco-cmdk input::placeholder {
+  color: var(--moco-faint);
+}
+
+.moco-cmdk ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem;
+  overflow-y: auto;
+}
+
+.moco-cmdk li button {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 0.65rem;
+  font-size: 13px;
+  color: var(--moco-muted);
+  border-radius: 2px;
+  /* Button reset the host app may not provide. */
+  font-family: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.moco-cmdk li[aria-selected="true"] button {
+  background: var(--moco-hover-wash);
+  color: var(--moco-ink);
+}
+
+.moco-cmdk .moco-kind {
+  color: var(--moco-faint);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex: none;
+}
+
+.moco-cmdk mark {
+  background: none;
+  color: var(--moco-accent-dk);
+  font-weight: 700;
+}
+
+.moco-cmdk .moco-empty {
+  padding: 1rem;
+  color: var(--moco-faint);
+  font-size: 13px;
+}

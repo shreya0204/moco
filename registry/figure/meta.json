@@ -1,0 +1,9 @@
+{
+  "name": "figure",
+  "title": "Figure",
+  "description": "Figure plate with run-in caption, plus an editorial table with small-caps heads and hairline rules.",
+  "tags": ["figure", "caption", "table", "layout"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["figure.tsx", "figure.css"]
+}

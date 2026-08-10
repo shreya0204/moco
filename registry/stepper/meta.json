@@ -1,0 +1,9 @@
+{
+  "name": "stepper",
+  "title": "Stepper",
+  "description": "Render-prop step sequencer with play/pause that auto-pauses off-screen and under reduced motion.",
+  "tags": ["figure", "interactive", "animation"],
+  "dependencies": [],
+  "registryDependencies": ["tokens", "hooks"],
+  "files": ["stepper.tsx", "stepper.css"]
+}

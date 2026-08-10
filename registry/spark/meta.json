@@ -1,0 +1,9 @@
+{
+  "name": "spark",
+  "title": "Spark",
+  "description": "Server-safe inline SVG sparklines and proportion bars that sit on the text baseline.",
+  "tags": ["chart", "sparkline", "svg", "inline"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["spark.tsx", "spark.css"]
+}

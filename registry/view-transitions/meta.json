@@ -1,0 +1,10 @@
+{
+  "name": "view-transitions",
+  "title": "View Transitions",
+  "description": "Cross-fade View Transitions for Next.js App Router route changes, plus a no-js flag remover.",
+  "tags": ["navigation", "animation", "next", "behavior"],
+  "dependencies": ["next"],
+  "registryDependencies": ["tokens"],
+  "files": ["view-transitions.tsx", "view-transitions.css"],
+  "framework": "next"
+}

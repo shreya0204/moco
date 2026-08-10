@@ -1,0 +1,9 @@
+{
+  "name": "palette",
+  "title": "Palette",
+  "description": "Cmd-K fuzzy command palette with subsequence matching, character highlighting, focus trap, and on-page section jumps.",
+  "tags": ["command-palette", "search", "keyboard", "dialog"],
+  "dependencies": [],
+  "registryDependencies": ["tokens", "hooks"],
+  "files": ["palette.tsx", "palette.css"]
+}

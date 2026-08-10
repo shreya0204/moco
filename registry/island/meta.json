@@ -1,0 +1,9 @@
+{
+  "name": "island",
+  "title": "Island",
+  "description": "Morphing sticky header for long reads: progress ring, scrollspy section, section menu, and a Read-next end phase.",
+  "tags": ["navigation", "header", "scrollspy", "progress"],
+  "dependencies": [],
+  "registryDependencies": ["tokens", "hooks"],
+  "files": ["island.tsx", "island.css"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "moco",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build:registry": "node scripts/build-registry.mjs",
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm run build:registry && pnpm --filter web build",
+    "test": "node scripts/build-registry.mjs && node scripts/smoke-mcp.mjs"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@11.2.2"
+}

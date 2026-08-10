@@ -1,0 +1,9 @@
+{
+  "name": "hooks",
+  "title": "Hooks",
+  "description": "Scroll and motion hooks: useReducedMotion, useScrollspy, useReadProgress, useInView, plus smoothScrollTo.",
+  "tags": ["hooks", "scroll", "motion", "utility"],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": ["hooks.ts"]
+}

@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "registry"
+allowBuilds:
+  sharp: true
+# Force patched transitive deps (advisories via next@15.5; drop when next ships them)
+overrides:
+  postcss: ">=8.5.26"
+  sharp: ">=0.35.3"

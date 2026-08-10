@@ -1,0 +1,19 @@
+/* View transitions + reduced motion. The pseudo-elements are page-global by
+   spec, so there is nothing to class-prefix here. */
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 250ms;
+  }
+}
+
+/* Belt-and-braces: the JS already no-ops under reduced motion, but this also
+   kills transitions the browser starts itself (e.g. back/forward). */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

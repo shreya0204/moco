@@ -1,0 +1,9 @@
+{
+  "name": "zoom",
+  "title": "Zoom",
+  "description": "Lightbox affordance for figures — Esc, click-outside, focus restore, and scroll lock included.",
+  "tags": ["lightbox", "figure", "dialog", "overlay"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["zoom.tsx", "zoom.css"]
+}

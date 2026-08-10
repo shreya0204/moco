@@ -1,0 +1,9 @@
+.moco-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+  border: 1px solid var(--moco-line);
+  border-radius: 3px;
+  background: var(--moco-panel);
+}

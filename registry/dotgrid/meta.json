@@ -1,0 +1,9 @@
+{
+  "name": "dotgrid",
+  "title": "Dot Grid",
+  "description": "Full-viewport canvas dot grid that drifts toward the cursor; pauses when the tab is hidden, off under reduced motion.",
+  "tags": ["canvas", "background", "motion", "decoration"],
+  "dependencies": [],
+  "registryDependencies": ["tokens", "hooks"],
+  "files": ["dotgrid.tsx", "dotgrid.css"]
+}

@@ -1,0 +1,625 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "moco",
+  "homepage": "https://mocoui.site",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "code",
+      "type": "registry:component",
+      "title": "Code",
+      "description": "Shiki-highlighted code windows: tabbed snippets with crossfade, and an annotated walkthrough with bidirectional linked highlighting.",
+      "framework": "next",
+      "dependencies": [
+        "shiki"
+      ],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "code",
+          "shiki",
+          "syntax-highlighting",
+          "tabs",
+          "walkthrough"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/code/code.tsx",
+          "type": "registry:component",
+          "target": "components/moco/code.tsx"
+        },
+        {
+          "path": "registry/code/code-client.tsx",
+          "type": "registry:component",
+          "target": "components/moco/code-client.tsx"
+        },
+        {
+          "path": "registry/code/code.css",
+          "type": "registry:file",
+          "target": "components/moco/code.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "compare",
+      "type": "registry:component",
+      "title": "Compare",
+      "description": "Before/after clip-path wipe with pointer, keyboard, and slider-role support.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "figure",
+          "interactive",
+          "slider"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/compare/compare.tsx",
+          "type": "registry:component",
+          "target": "components/moco/compare.tsx"
+        },
+        {
+          "path": "registry/compare/compare.css",
+          "type": "registry:file",
+          "target": "components/moco/compare.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "countup",
+      "type": "registry:component",
+      "title": "Count Up",
+      "description": "Scroll-triggered number count-up with reserved width (no layout shift), built-in Intl formatters, and reduced-motion instant-set.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json",
+        "https://mocoui.site/r/hooks.json"
+      ],
+      "meta": {
+        "tags": [
+          "number",
+          "animation",
+          "scroll",
+          "inline"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/countup/countup.tsx",
+          "type": "registry:component",
+          "target": "components/moco/countup.tsx"
+        },
+        {
+          "path": "registry/countup/countup.css",
+          "type": "registry:file",
+          "target": "components/moco/countup.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cover",
+      "type": "registry:component",
+      "title": "Cover",
+      "description": "Deterministic FNV-1a-seeded generative SVG cover art in three variants: curves, blocks, bars.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "generative",
+          "svg",
+          "cover",
+          "art"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/cover/cover.tsx",
+          "type": "registry:component",
+          "target": "components/moco/cover.tsx"
+        },
+        {
+          "path": "registry/cover/cover.css",
+          "type": "registry:file",
+          "target": "components/moco/cover.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "diagram",
+      "type": "registry:component",
+      "title": "Diagram Kit",
+      "description": "HTML/CSS block diagrams — rows, blocks with variants and tooltips, diamonds, brackets, notes, and a legend. Real DOM: selectable, screen-reader reachable, reflows.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "diagram",
+          "layout",
+          "accessibility"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/diagram/diagram.tsx",
+          "type": "registry:component",
+          "target": "components/moco/diagram.tsx"
+        },
+        {
+          "path": "registry/diagram/diagram.css",
+          "type": "registry:file",
+          "target": "components/moco/diagram.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dotgrid",
+      "type": "registry:component",
+      "title": "Dot Grid",
+      "description": "Full-viewport canvas dot grid that drifts toward the cursor; pauses when the tab is hidden, off under reduced motion.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json",
+        "https://mocoui.site/r/hooks.json"
+      ],
+      "meta": {
+        "tags": [
+          "canvas",
+          "background",
+          "motion",
+          "decoration"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/dotgrid/dotgrid.tsx",
+          "type": "registry:component",
+          "target": "components/moco/dotgrid.tsx"
+        },
+        {
+          "path": "registry/dotgrid/dotgrid.css",
+          "type": "registry:file",
+          "target": "components/moco/dotgrid.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "figure",
+      "type": "registry:component",
+      "title": "Figure",
+      "description": "Figure plate with run-in caption, plus an editorial table with small-caps heads and hairline rules.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "figure",
+          "caption",
+          "table",
+          "layout"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/figure/figure.tsx",
+          "type": "registry:component",
+          "target": "components/moco/figure.tsx"
+        },
+        {
+          "path": "registry/figure/figure.css",
+          "type": "registry:file",
+          "target": "components/moco/figure.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hooks",
+      "type": "registry:component",
+      "title": "Hooks",
+      "description": "Scroll and motion hooks: useReducedMotion, useScrollspy, useReadProgress, useInView, plus smoothScrollTo.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "meta": {
+        "tags": [
+          "hooks",
+          "scroll",
+          "motion",
+          "utility"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/hooks/hooks.ts",
+          "type": "registry:hook",
+          "target": "components/moco/hooks.ts"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "island",
+      "type": "registry:component",
+      "title": "Island",
+      "description": "Morphing sticky header for long reads: progress ring, scrollspy section, section menu, and a Read-next end phase.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json",
+        "https://mocoui.site/r/hooks.json"
+      ],
+      "meta": {
+        "tags": [
+          "navigation",
+          "header",
+          "scrollspy",
+          "progress"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/island/island.tsx",
+          "type": "registry:component",
+          "target": "components/moco/island.tsx"
+        },
+        {
+          "path": "registry/island/island.css",
+          "type": "registry:file",
+          "target": "components/moco/island.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "math",
+      "type": "registry:component",
+      "title": "Math Block",
+      "description": "Display equation with a plain-English restatement and a 'show the math' derivation disclosure. Children are typically KaTeX/MathML output — katex is an optional peer, not imported here.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "math",
+          "prose",
+          "disclosure"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/math/math.tsx",
+          "type": "registry:component",
+          "target": "components/moco/math.tsx"
+        },
+        {
+          "path": "registry/math/math.css",
+          "type": "registry:file",
+          "target": "components/moco/math.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "notes",
+      "type": "registry:component",
+      "title": "Notes",
+      "description": "Tufte-style numbered margin notes (CSS-counter ordered, tap-to-expand below 1280px) and dotted-underline term popovers with viewport-edge flip.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "prose",
+          "sidenote",
+          "tooltip",
+          "typography"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/notes/notes.tsx",
+          "type": "registry:component",
+          "target": "components/moco/notes.tsx"
+        },
+        {
+          "path": "registry/notes/notes.css",
+          "type": "registry:file",
+          "target": "components/moco/notes.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "palette",
+      "type": "registry:component",
+      "title": "Palette",
+      "description": "Cmd-K fuzzy command palette with subsequence matching, character highlighting, focus trap, and on-page section jumps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json",
+        "https://mocoui.site/r/hooks.json"
+      ],
+      "meta": {
+        "tags": [
+          "command-palette",
+          "search",
+          "keyboard",
+          "dialog"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/palette/palette.tsx",
+          "type": "registry:component",
+          "target": "components/moco/palette.tsx"
+        },
+        {
+          "path": "registry/palette/palette.css",
+          "type": "registry:file",
+          "target": "components/moco/palette.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "rail",
+      "type": "registry:component",
+      "title": "Rail",
+      "description": "Left-edge section minimap: one tick per heading, active-section highlight, labels on hover. Hidden below 1280px.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json",
+        "https://mocoui.site/r/hooks.json"
+      ],
+      "meta": {
+        "tags": [
+          "navigation",
+          "scrollspy",
+          "toc"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/rail/rail.tsx",
+          "type": "registry:component",
+          "target": "components/moco/rail.tsx"
+        },
+        {
+          "path": "registry/rail/rail.css",
+          "type": "registry:file",
+          "target": "components/moco/rail.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scrolly",
+      "type": "registry:component",
+      "title": "Scrolly Stage",
+      "description": "Scrollytelling stage: a pinned figure that updates as prose steps scroll past, unpinning below 1024px.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "figure",
+          "scrollytelling",
+          "layout"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/scrolly/scrolly.tsx",
+          "type": "registry:component",
+          "target": "components/moco/scrolly.tsx"
+        },
+        {
+          "path": "registry/scrolly/scrolly.css",
+          "type": "registry:file",
+          "target": "components/moco/scrolly.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scrub",
+      "type": "registry:component",
+      "title": "Scrub Number",
+      "description": "Tangle-style inline number scrubber: drag the variable itself, with a compact range input for pointer and keyboard access.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "number",
+          "input",
+          "drag",
+          "inline",
+          "interactive"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/scrub/scrub.tsx",
+          "type": "registry:component",
+          "target": "components/moco/scrub.tsx"
+        },
+        {
+          "path": "registry/scrub/scrub.css",
+          "type": "registry:file",
+          "target": "components/moco/scrub.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "spark",
+      "type": "registry:component",
+      "title": "Spark",
+      "description": "Server-safe inline SVG sparklines and proportion bars that sit on the text baseline.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "chart",
+          "sparkline",
+          "svg",
+          "inline"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/spark/spark.tsx",
+          "type": "registry:component",
+          "target": "components/moco/spark.tsx"
+        },
+        {
+          "path": "registry/spark/spark.css",
+          "type": "registry:file",
+          "target": "components/moco/spark.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stepper",
+      "type": "registry:component",
+      "title": "Stepper",
+      "description": "Render-prop step sequencer with play/pause that auto-pauses off-screen and under reduced motion.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json",
+        "https://mocoui.site/r/hooks.json"
+      ],
+      "meta": {
+        "tags": [
+          "figure",
+          "interactive",
+          "animation"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/stepper/stepper.tsx",
+          "type": "registry:component",
+          "target": "components/moco/stepper.tsx"
+        },
+        {
+          "path": "registry/stepper/stepper.css",
+          "type": "registry:file",
+          "target": "components/moco/stepper.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "tokens",
+      "type": "registry:component",
+      "title": "Design Tokens",
+      "description": "The moco token contract: warm-paper light theme + warm-dark theme, lime accent, four font slots. Import once; every moco component styles itself from these variables.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "meta": {
+        "tags": [
+          "theme",
+          "tokens",
+          "setup"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/tokens/tokens.css",
+          "type": "registry:file",
+          "target": "components/moco/tokens.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "view-transitions",
+      "type": "registry:component",
+      "title": "View Transitions",
+      "description": "Cross-fade View Transitions for Next.js App Router route changes, plus a no-js flag remover.",
+      "framework": "next",
+      "dependencies": [
+        "next"
+      ],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "navigation",
+          "animation",
+          "next",
+          "behavior"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/view-transitions/view-transitions.tsx",
+          "type": "registry:component",
+          "target": "components/moco/view-transitions.tsx"
+        },
+        {
+          "path": "registry/view-transitions/view-transitions.css",
+          "type": "registry:file",
+          "target": "components/moco/view-transitions.css"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "zoom",
+      "type": "registry:component",
+      "title": "Zoom",
+      "description": "Lightbox affordance for figures — Esc, click-outside, focus restore, and scroll lock included.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://mocoui.site/r/tokens.json"
+      ],
+      "meta": {
+        "tags": [
+          "lightbox",
+          "figure",
+          "dialog",
+          "overlay"
+        ]
+      },
+      "files": [
+        {
+          "path": "registry/zoom/zoom.tsx",
+          "type": "registry:component",
+          "target": "components/moco/zoom.tsx"
+        },
+        {
+          "path": "registry/zoom/zoom.css",
+          "type": "registry:file",
+          "target": "components/moco/zoom.css"
+        }
+      ]
+    }
+  ]
+}

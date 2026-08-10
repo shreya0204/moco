@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "countup",
+  "type": "registry:component",
+  "title": "Count Up",
+  "description": "Scroll-triggered number count-up with reserved width (no layout shift), built-in Intl formatters, and reduced-motion instant-set.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json",
+    "https://mocoui.site/r/hooks.json"
+  ],
+  "files": [
+    {
+      "path": "registry/countup/countup.tsx",
+      "type": "registry:component",
+      "target": "components/moco/countup.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { useInView, useReducedMotion } from \"@/components/moco/hooks\";\nimport \"./countup.css\";\n\nconst groupedInt = new Intl.NumberFormat(\"en-US\", { maximumFractionDigits: 0 });\nconst compactNum = new Intl.NumberFormat(\"en-US\", {\n  notation: \"compact\",\n  maximumFractionDigits: 1,\n});\nconst percentNum = new Intl.NumberFormat(\"en-US\", { maximumFractionDigits: 1 });\n\n/**\n * Built-in formatters, named so the component works from server-rendered\n * prose where a function prop cannot cross the RSC boundary. Client callers\n * can pass `format` instead.\n */\nconst FORMATS = {\n  /** Grouped integer: 12,345. */\n  int: (n: number) => groupedInt.format(n),\n  /** Currency: $ prefix, digits scale with magnitude ($1,284 / $3.50 / $0.004). */\n  usd: (n: number) => {\n    const d = Math.abs(n) >= 100 ? 0 : Math.abs(n) >= 1 ? 2 : 3;\n    return `$${n.toLocaleString(\"en-US\", { minimumFractionDigits: d, maximumFractionDigits: d })}`;\n  },\n  /** Compact: 1.2k / 3.4M. */\n  compact: (n: number) => compactNum.format(n).replace(\"K\", \"k\"),\n  /** Percent of a 0–100 value: 42% / 99.9%. */\n  percent: (n: number) => `${percentNum.format(n)}%`,\n} as const;\n\nexport type CountUpFormat = keyof typeof FORMATS;\n\nexport type CountUpProps = {\n  value: number;\n  from?: number;\n  /** Animation length in ms. */\n  duration?: number;\n  /** Built-in formatter name; ignored when `format` is given. */\n  as?: CountUpFormat;\n  /** Custom formatter — client-side callers only (functions cannot cross the RSC boundary). */\n  format?: (n: number) => string;\n  className?: string;\n};\n\n/**\n * Counts up once, the first time it scrolls into view. Width is reserved from\n * the final value up front so nothing reflows. Disabled under reduced motion.\n */\nexport function CountUp({\n  value,\n  from = 0,\n  duration = 900,\n  as = \"int\",\n  format,\n  className,\n}: CountUpProps) {\n  const fmt = format ?? FORMATS[as];\n  const ref = React.useRef<HTMLSpanElement>(null);\n  const seen = useInView(ref);\n  const reduced = useReducedMotion();\n  const [n, setN] = React.useState(value);\n  const started = React.useRef(false);\n\n  React.useEffect(() => {\n    if (!seen || reduced || started.current) return;\n    started.current = true;\n    setN(from);\n    const t0 = performance.now();\n    let raf = 0;\n    const tick = (t: number) => {\n      const k = Math.min(1, (t - t0) / duration);\n      const eased = 1 - Math.pow(1 - k, 3);\n      setN(from + (value - from) * eased);\n      if (k < 1) raf = requestAnimationFrame(tick);\n    };\n    raf = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(raf);\n  }, [seen, reduced, from, value, duration]);\n\n  const final = fmt(value);\n\n  return (\n    <span\n      ref={ref}\n      className={`moco-countup${className ? ` ${className}` : \"\"}`}\n      style={{ display: \"inline-grid\" }}\n    >\n      {/* Reserves the final width; invisible but laid out. */}\n      <span aria-hidden=\"true\" style={{ gridArea: \"1/1\", visibility: \"hidden\" }}>\n        {final}\n      </span>\n      <span style={{ gridArea: \"1/1\" }}>{fmt(n)}</span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "registry/countup/countup.css",
+      "type": "registry:file",
+      "target": "components/moco/countup.css",
+      "content": "/* Mono + tabular figures so digits don't jitter while they animate. */\n.moco-countup {\n  font-family: var(--moco-mono);\n  font-variant-numeric: tabular-nums;\n}\n"
+    }
+  ],
+  "docs": "import { CountUp } from \"./countup\";\n\nexport default function CountUpDemo() {\n  return (\n    <p style={{ fontFamily: \"var(--moco-serif)\", color: \"var(--moco-body)\" }}>\n      Uncached, you pay <CountUp value={1284.5} as=\"usd\" /> a month across{\" \"}\n      <CountUp value={42_000} as=\"compact\" /> requests — and{\" \"}\n      <CountUp value={97.4} as=\"percent\" /> of them hit the same{\" \"}\n      <CountUp value={12_500} as=\"int\" />-token prefix.\n    </p>\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "number",
+      "animation",
+      "scroll",
+      "inline"
+    ]
+  }
+}

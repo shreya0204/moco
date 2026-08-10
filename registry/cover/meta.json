@@ -1,0 +1,9 @@
+{
+  "name": "cover",
+  "title": "Cover",
+  "description": "Deterministic FNV-1a-seeded generative SVG cover art in three variants: curves, blocks, bars.",
+  "tags": ["generative", "svg", "cover", "art"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["cover.tsx", "cover.css"]
+}

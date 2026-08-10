@@ -1,0 +1,9 @@
+{
+  "name": "countup",
+  "title": "Count Up",
+  "description": "Scroll-triggered number count-up with reserved width (no layout shift), built-in Intl formatters, and reduced-motion instant-set.",
+  "tags": ["number", "animation", "scroll", "inline"],
+  "dependencies": [],
+  "registryDependencies": ["tokens", "hooks"],
+  "files": ["countup.tsx", "countup.css"]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "diagram",
+  "title": "Diagram Kit",
+  "description": "HTML/CSS block diagrams — rows, blocks with variants and tooltips, diamonds, brackets, notes, and a legend. Real DOM: selectable, screen-reader reachable, reflows.",
+  "tags": ["diagram", "layout", "accessibility"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["diagram.tsx", "diagram.css"]
+}

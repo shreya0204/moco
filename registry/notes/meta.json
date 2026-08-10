@@ -1,0 +1,9 @@
+{
+  "name": "notes",
+  "title": "Notes",
+  "description": "Tufte-style numbered margin notes (CSS-counter ordered, tap-to-expand below 1280px) and dotted-underline term popovers with viewport-edge flip.",
+  "tags": ["prose", "sidenote", "tooltip", "typography"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["notes.tsx", "notes.css"]
+}

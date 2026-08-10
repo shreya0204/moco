@@ -1,0 +1,54 @@
+.moco-cmp {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+  border: 1px solid var(--moco-line);
+  border-radius: 2px;
+  background: var(--moco-bg);
+}
+
+.moco-cmp-after {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Opaque ground: without it, translucent `after` content lets the before
+     layer (and its text) bleed through the revealed side. */
+  background: var(--moco-bg);
+}
+
+.moco-cmp-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--moco-accent-dk);
+  z-index: 4;
+}
+
+.moco-cmp-grab {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 34px;
+  border: 1px solid var(--moco-accent-dk);
+  border-radius: 2px;
+  background: var(--moco-bg);
+  cursor: ew-resize;
+  display: grid;
+  place-items: center;
+  color: var(--moco-accent-dk);
+  font-size: 10px;
+}
+
+.moco-cmp-label {
+  position: absolute;
+  top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--moco-faint);
+  z-index: 3;
+}

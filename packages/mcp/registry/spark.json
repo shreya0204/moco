@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spark",
+  "type": "registry:component",
+  "title": "Spark",
+  "description": "Server-safe inline SVG sparklines and proportion bars that sit on the text baseline.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/spark/spark.tsx",
+      "type": "registry:component",
+      "target": "components/moco/spark.tsx",
+      "content": "import * as React from \"react\";\nimport \"./spark.css\";\n\nexport type SparkTone = \"accent\" | \"warn\" | \"faint\";\n\nconst TONE: Record<SparkTone, string> = {\n  accent: \"var(--moco-accent-dk)\",\n  warn: \"var(--moco-warn)\",\n  faint: \"var(--moco-faint)\",\n};\n\nexport interface SparkProps {\n  data: number[];\n  w?: number;\n  h?: number;\n  dot?: boolean;\n  tone?: SparkTone;\n  label?: string;\n}\n\n/**\n * Inline sparklines. ~60×16, sits on the text baseline, no axes, no labels.\n * These are punctuation, not charts.\n */\nexport function Spark({ data, w = 60, h = 16, dot = true, tone = \"accent\", label }: SparkProps) {\n  if (data.length < 2) return null;\n  const min = Math.min(...data);\n  const max = Math.max(...data);\n  const span = max - min || 1;\n  const x = (i: number) => (i / (data.length - 1)) * (w - 2) + 1;\n  const y = (v: number) => h - 2 - ((v - min) / span) * (h - 4);\n  const d = data.map((v, i) => `${i ? \"L\" : \"M\"}${x(i).toFixed(2)},${y(v).toFixed(2)}`).join(\" \");\n\n  return (\n    <svg\n      className=\"moco-spark\"\n      width={w}\n      height={h}\n      viewBox={`0 0 ${w} ${h}`}\n      role=\"img\"\n      aria-label={label ?? `sparkline, ${data.length} points, ${min.toFixed(2)} to ${max.toFixed(2)}`}\n    >\n      <path d={d} fill=\"none\" stroke={TONE[tone]} strokeWidth=\"1\" />\n      {dot ? (\n        <circle\n          cx={x(data.length - 1)}\n          cy={y(data[data.length - 1])}\n          r=\"1.6\"\n          fill={TONE[tone]}\n        />\n      ) : null}\n    </svg>\n  );\n}\n\nexport interface SparkBarProps {\n  value: number;\n  max?: number;\n  w?: number;\n  h?: number;\n  tone?: SparkTone;\n  label?: string;\n}\n\n/** A tiny inline proportion bar. */\nexport function SparkBar({ value, max = 1, w = 60, h = 8, tone = \"accent\", label }: SparkBarProps) {\n  const k = Math.max(0, Math.min(1, value / max));\n  return (\n    <svg\n      className=\"moco-spark\"\n      width={w}\n      height={h}\n      viewBox={`0 0 ${w} ${h}`}\n      role=\"img\"\n      aria-label={label ?? `${Math.round(k * 100)} percent`}\n    >\n      <rect x=\"0\" y={h / 2 - 2} width={w} height=\"4\" fill=\"var(--moco-line)\" />\n      <rect x=\"0\" y={h / 2 - 2} width={w * k} height=\"4\" fill={TONE[tone]} />\n    </svg>\n  );\n}\n"
+    },
+    {
+      "path": "registry/spark/spark.css",
+      "type": "registry:file",
+      "target": "components/moco/spark.css",
+      "content": ".moco-spark {\n  display: inline-block;\n  vertical-align: baseline;\n  margin: 0 0.15em;\n  overflow: visible;\n}\n"
+    }
+  ],
+  "docs": "import { Spark, SparkBar } from \"./spark\";\n\nexport default function SparkDemo() {\n  return (\n    <p style={{ fontFamily: \"var(--moco-serif)\", color: \"var(--moco-body)\" }}>\n      Latency trended down <Spark data={[9, 7, 8, 5, 4, 4, 2]} /> over the quarter, error rate\n      spiked once <Spark data={[1, 1, 6, 2, 1]} tone=\"warn\" dot={false} label=\"error rate spike\" />,\n      and cache hit rate sits at <SparkBar value={0.82} label=\"82 percent cache hit rate\" /> 82%.\n    </p>\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "chart",
+      "sparkline",
+      "svg",
+      "inline"
+    ]
+  }
+}

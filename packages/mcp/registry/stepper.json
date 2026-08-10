@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper",
+  "type": "registry:component",
+  "title": "Stepper",
+  "description": "Render-prop step sequencer with play/pause that auto-pauses off-screen and under reduced motion.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json",
+    "https://mocoui.site/r/hooks.json"
+  ],
+  "files": [
+    {
+      "path": "registry/stepper/stepper.tsx",
+      "type": "registry:component",
+      "target": "components/moco/stepper.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport \"./stepper.css\";\nimport { useInView, useReducedMotion } from \"@/components/moco/hooks\";\n\nexport interface StepperStep {\n  key: string;\n  caption: string;\n}\n\nexport interface StepperProps {\n  steps: StepperStep[];\n  render: (i: number) => React.ReactNode;\n  /** Accessible name for the stepper group. */\n  ariaLabel: string;\n}\n\n/**\n * Generic state-machine stepper. Auto-play never starts on its own — it needs\n * a click — and it stops when the component scrolls out of view.\n */\nexport function Stepper({ steps, render, ariaLabel }: StepperProps) {\n  const [i, setI] = React.useState(0);\n  const [playing, setPlaying] = React.useState(false);\n  const ref = React.useRef<HTMLDivElement>(null);\n  const visible = useInView(ref, { once: false, rootMargin: \"0px\" });\n  const reduced = useReducedMotion();\n\n  React.useEffect(() => {\n    if (!playing || !visible || reduced) return;\n    const t = setInterval(() => setI((v) => (v + 1) % steps.length), 1600);\n    return () => clearInterval(t);\n  }, [playing, visible, reduced, steps.length]);\n\n  React.useEffect(() => {\n    if (!visible) setPlaying(false);\n  }, [visible]);\n\n  return (\n    <div\n      ref={ref}\n      tabIndex={0}\n      role=\"group\"\n      aria-label={ariaLabel}\n      onKeyDown={(e) => {\n        if (e.key === \"ArrowRight\") {\n          setPlaying(false);\n          setI((v) => Math.min(steps.length - 1, v + 1));\n        }\n        if (e.key === \"ArrowLeft\") {\n          setPlaying(false);\n          setI((v) => Math.max(0, v - 1));\n        }\n      }}\n    >\n      <div key={i} className=\"moco-win-fade\">\n        {render(i)}\n      </div>\n\n      <p className=\"moco-step-cap\" aria-live=\"polite\">\n        {steps[i].caption}\n      </p>\n\n      <div className=\"moco-step-bar\">\n        <button\n          type=\"button\"\n          className=\"moco-step-btn\"\n          aria-label=\"Previous step\"\n          disabled={i === 0}\n          onClick={() => {\n            setPlaying(false);\n            setI((v) => Math.max(0, v - 1));\n          }}\n        >\n          ◀\n        </button>\n        <button\n          type=\"button\"\n          className=\"moco-step-btn\"\n          aria-label=\"Next step\"\n          disabled={i === steps.length - 1}\n          onClick={() => {\n            setPlaying(false);\n            setI((v) => Math.min(steps.length - 1, v + 1));\n          }}\n        >\n          ▶\n        </button>\n        <span>\n          {i + 1} / {steps.length}\n        </span>\n        {reduced ? null : (\n          <button\n            type=\"button\"\n            className=\"moco-step-btn\"\n            aria-label={playing ? \"Pause\" : \"Play\"}\n            aria-pressed={playing}\n            onClick={() => setPlaying((v) => !v)}\n          >\n            {playing ? \"❙❙\" : \"▶\"}\n          </button>\n        )}\n      </div>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "registry/stepper/stepper.css",
+      "type": "registry:file",
+      "target": "components/moco/stepper.css",
+      "content": ".moco-win-fade {\n  animation: moco-fadein 220ms var(--moco-ease);\n}\n\n@keyframes moco-fadein {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n.moco-step-bar {\n  display: flex;\n  align-items: center;\n  gap: 0.6rem;\n  margin-top: 1.25rem;\n  padding-top: 1rem;\n  border-top: 1px solid var(--moco-line);\n  font-size: 12px;\n  color: var(--moco-faint);\n}\n\n.moco-step-btn {\n  width: 28px;\n  height: 28px;\n  border: 1px solid var(--moco-line);\n  border-radius: 2px;\n  display: grid;\n  place-items: center;\n  color: var(--moco-muted);\n  background: var(--moco-bg);\n  transition: color 150ms var(--moco-ease);\n}\n\n.moco-step-btn:hover:not(:disabled) {\n  color: var(--moco-accent-dk);\n  border-color: var(--moco-accent-dk);\n}\n\n.moco-step-btn:disabled {\n  opacity: 0.35;\n  cursor: default;\n}\n\n.moco-step-cap {\n  color: var(--moco-muted);\n  font-size: 13px;\n  margin-top: 1rem;\n  min-height: 2.6em;\n}\n"
+    }
+  ],
+  "docs": "import { Stepper } from \"./stepper\";\n\nconst STEPS = [\n  { key: \"one\", caption: \"First: the request arrives.\" },\n  { key: \"two\", caption: \"Second: it gets processed.\" },\n  { key: \"three\", caption: \"Third: the response goes out.\" },\n];\n\nexport default function StepperDemo() {\n  return (\n    <Stepper\n      steps={STEPS}\n      ariaLabel=\"Request lifecycle stepper\"\n      render={(i) => (\n        <div\n          style={{\n            display: \"grid\",\n            placeItems: \"center\",\n            height: 120,\n            background: \"var(--moco-panel)\",\n            borderRadius: 2,\n            fontFamily: \"var(--moco-mono)\",\n            color: \"var(--moco-ink)\",\n          }}\n        >\n          step {i + 1}\n        </div>\n      )}\n    />\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "figure",
+      "interactive",
+      "animation"
+    ]
+  }
+}

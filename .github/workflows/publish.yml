@@ -1,0 +1,29 @@
+# Publishes moco-mcp to npm with OIDC trusted publishing + provenance.
+# One-time setup on npmjs.com (after the first manual publish or via package
+# settings): Package -> Settings -> Trusted Publisher -> GitHub Actions,
+# repository shreya0204/moco, workflow publish.yml. No npm token needed.
+name: publish
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC for npm trusted publishing / provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - run: REGISTRY_URL=${{ vars.REGISTRY_URL || 'https://mocoui.site' }} pnpm build:registry
+      - run: node scripts/smoke-mcp.mjs
+      - run: npm publish --provenance --access public
+        working-directory: packages/mcp

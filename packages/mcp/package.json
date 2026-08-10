@@ -1,0 +1,26 @@
+{
+  "name": "moco-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for moco — editorial React components. Lets Claude (or any MCP client) browse, search, and install moco components into your project.",
+  "type": "module",
+  "bin": { "moco-mcp": "index.mjs" },
+  "files": ["index.mjs", "registry/"],
+  "scripts": {
+    "prepublishOnly": "node -e \"const h=JSON.parse(require('fs').readFileSync('registry/registry.json')).homepage; if(!/^https:/.test(h)) throw new Error('Registry built for '+h+' — rebuild with REGISTRY_URL=<prod url> pnpm build:registry before publishing')\""
+  },
+  "license": "MIT",
+  "author": "Shreya Agarwal (https://github.com/shreya0204)",
+  "homepage": "https://mocoui.site",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shreya0204/moco.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": { "url": "https://github.com/shreya0204/moco/issues" },
+  "engines": { "node": ">=18" },
+  "keywords": ["mcp", "react", "components", "editorial", "scrollytelling", "shadcn-registry"],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  }
+}

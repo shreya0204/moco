@@ -1,0 +1,5 @@
+/* Mono + tabular figures so digits don't jitter while they animate. */
+.moco-countup {
+  font-family: var(--moco-mono);
+  font-variant-numeric: tabular-nums;
+}

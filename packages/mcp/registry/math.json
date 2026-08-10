@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "math",
+  "type": "registry:component",
+  "title": "Math Block",
+  "description": "Display equation with a plain-English restatement and a 'show the math' derivation disclosure. Children are typically KaTeX/MathML output — katex is an optional peer, not imported here.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://mocoui.site/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/math/math.tsx",
+      "type": "registry:component",
+      "target": "components/moco/math.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport \"./math.css\";\n\n/**\n * A display equation with a plain-English restatement under it and a\n * progressive-disclosure button for the derivation.\n *\n * `children` is the rendered equation — typically KaTeX or MathML output.\n * katex is not imported here; render the math however you like.\n */\nexport interface MathBlockProps {\n  children: React.ReactNode;\n  plain: string;\n  derivation?: React.ReactNode;\n}\n\nexport function MathBlock({ children, plain, derivation }: MathBlockProps) {\n  const [open, setOpen] = React.useState(false);\n  const id = React.useId();\n  return (\n    <div className=\"moco-math-block\">\n      {derivation ? (\n        <div className=\"moco-math-head\">\n          <button\n            type=\"button\"\n            className=\"moco-btn-sm\"\n            aria-expanded={open}\n            aria-controls={id}\n            onClick={() => setOpen((v) => !v)}\n          >\n            {open ? \"Hide the math\" : \"Show the math\"}\n          </button>\n        </div>\n      ) : null}\n      {children}\n      <p className=\"moco-math-plain\">{plain}</p>\n      {derivation ? (\n        <div id={id} className=\"moco-math-deriv\" hidden={!open}>\n          {derivation}\n        </div>\n      ) : null}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "registry/math/math.css",
+      "type": "registry:file",
+      "target": "components/moco/math.css",
+      "content": ".moco-math-block {\n  margin: 2.5rem 0;\n}\n\n.moco-math-head {\n  display: flex;\n  justify-content: flex-end;\n}\n\n.moco-math-plain {\n  font-family: var(--moco-serif);\n  color: var(--moco-muted);\n  font-size: 13.5px;\n  text-align: center;\n  margin-top: 0.4rem;\n}\n\n.moco-math-deriv {\n  font-family: var(--moco-serif);\n  border: 1px solid var(--moco-line);\n  border-radius: 2px;\n  padding: 1rem 1.15rem;\n  margin-top: 1rem;\n  font-size: 13.5px;\n  color: var(--moco-muted);\n  background: var(--moco-panel);\n}\n\n.moco-btn-sm {\n  font: inherit;\n  border: 1px solid var(--moco-line);\n  border-radius: 2px;\n  padding: 0.2rem 0.6rem;\n  font-size: 12px;\n  color: var(--moco-muted);\n  background: var(--moco-bg);\n  cursor: pointer;\n  transition:\n    color 150ms var(--moco-ease),\n    border-color 150ms var(--moco-ease);\n}\n\n.moco-btn-sm:hover {\n  color: var(--moco-accent-dk);\n  border-color: var(--moco-accent-dk);\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .moco-btn-sm {\n    transition-duration: 0.001ms;\n  }\n}\n"
+    }
+  ],
+  "docs": "\"use client\";\n\nimport * as React from \"react\";\nimport { MathBlock } from \"./math\";\n\n/* In real use `children` is KaTeX or MathML output; plain markup works too. */\nexport default function MathDemo() {\n  return (\n    <MathBlock\n      plain=\"Compound growth: the final amount is the start times the rate, applied once per period.\"\n      derivation={\n        <>\n          <p>\n            After one period: <code>A₁ = P(1 + r)</code>. Each subsequent period\n            multiplies by <code>(1 + r)</code> again, so after <code>n</code>{\" \"}\n            periods the factors stack: <code>A = P(1 + r)ⁿ</code>.\n          </p>\n        </>\n      }\n    >\n      <p style={{ textAlign: \"center\", fontSize: \"1.2em\" }}>\n        <em>A = P(1 + r)ⁿ</em>\n      </p>\n    </MathBlock>\n  );\n}\n",
+  "meta": {
+    "tags": [
+      "math",
+      "prose",
+      "disclosure"
+    ]
+  }
+}

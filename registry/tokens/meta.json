@@ -1,0 +1,9 @@
+{
+  "name": "tokens",
+  "title": "Design Tokens",
+  "description": "The moco token contract: warm-paper light theme + warm-dark theme, lime accent, four font slots. Import once; every moco component styles itself from these variables.",
+  "tags": ["theme", "tokens", "setup"],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": ["tokens.css"]
+}

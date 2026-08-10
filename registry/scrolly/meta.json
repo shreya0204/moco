@@ -1,0 +1,9 @@
+{
+  "name": "scrolly",
+  "title": "Scrolly Stage",
+  "description": "Scrollytelling stage: a pinned figure that updates as prose steps scroll past, unpinning below 1024px.",
+  "tags": ["figure", "scrollytelling", "layout"],
+  "dependencies": [],
+  "registryDependencies": ["tokens"],
+  "files": ["scrolly.tsx", "scrolly.css"]
+}
