@@ -1,8 +1,22 @@
+<p align="center">
+  <a href="https://mocoui.site">
+    <img src=".github/assets/banner.png" alt="moco: editorial react components, for people who write" width="100%">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://mocoui.site"><b>Docs and live demos</b></a>
+  ·
+  <a href="https://mocoui.site/components">Components</a>
+  ·
+  <a href="https://mocoui.site/docs/mcp">MCP server</a>
+  ·
+  <a href="https://www.npmjs.com/package/moco-mcp">npm</a>
+</p>
+
 # moco
 
 Editorial components for React. Built for technical essays and blogs: scrollytelling, margin notes, sparklines, before/after compares, animated numbers, block diagrams, and code walkthroughs.
-
-Docs and live demos: **[mocoui.site](https://mocoui.site)**
 
 moco is not a general UI kit. It covers the things longform writing needs and design systems usually skip. Every component ships with real typography, keyboard support, ARIA, and `prefers-reduced-motion` handling.
 
