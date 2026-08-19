@@ -82,15 +82,15 @@ export default function Home() {
     <main id="main" className="wrap landing">
       <section className="hero" aria-labelledby="hero-h">
         <p className="hero-badge">
-          {items.length} open-source components · MIT · MCP server included
+          Editorial React components · installed by asking · MIT
         </p>
         <h1 id="hero-h">
           Components for people who <mark>write</mark>.
         </h1>
         <p className="sub">
-          moco is an open-source library of editorial React components.
-          Scrollytelling, margin notes, sparklines, and {items.length - 3}{" "}
-          more. Copy the source, or let Claude install it for you.
+          Editorial React components for technical writing: scrollytelling,
+          margin notes, sparklines, annotated code. No package to install.
+          Tell Claude what you need and the files land in your repo.
         </p>
         <div className="hero-ctas">
           <Link href="/docs/installation" className="btn btn-primary">
@@ -154,8 +154,11 @@ export default function Home() {
 
       <section aria-labelledby="install-h">
         <div className="section-head" style={{ marginInline: "auto", textAlign: "center" }}>
-          <h2 id="install-h">Install it your way</h2>
-          <p>Three paths to the same files. Pick one.</p>
+          <h2 id="install-h">Install it by asking</h2>
+          <p>
+            The MCP server is the short path. The shadcn CLI and plain
+            copy-paste land the exact same files if you would rather.
+          </p>
         </div>
         <InstallTabs tabs={tabs} />
       </section>

@@ -11,11 +11,14 @@ export interface DotGridProps {
   radius?: number;
 }
 
+const TAU = Math.PI * 2;
+
 /**
  * Sparse dot grid that reacts to the cursor. Pauses when the tab is hidden and
  * does not run at all under prefers-reduced-motion. Dot color is resolved from
  * the canvas's computed `color` (set to var(--moco-ink) in dotgrid.css), so it
- * stays visible in dark mode; only the alpha ramp is applied on top.
+ * stays visible in dark mode; only the alpha ramp is applied on top. Dots
+ * brighten and grow as the cursor nears them.
  */
 export function DotGrid({ spacing = 34, radius = 130 }: DotGridProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
@@ -59,12 +62,14 @@ export function DotGrid({ spacing = 34, radius = 130 }: DotGridProps) {
           const dy = y - pointer.y;
           const d = Math.hypot(dx, dy);
           const k = d < radius ? 1 - d / radius : 0;
-          const alpha = 0.07 + k * 0.26;
-          const push = k * 4;
-          const px = x + (d ? (dx / d) * push : 0);
-          const py = y + (d ? (dy / d) * push : 0);
+          const alpha = 0.16 + k * 0.44;
+          const pull = k * 5;
+          const px = x - (d ? (dx / d) * pull : 0);
+          const py = y - (d ? (dy / d) * pull : 0);
           ctx.fillStyle = `rgba(${rgb},${alpha.toFixed(3)})`;
-          ctx.fillRect(px, py, 1, 1);
+          ctx.beginPath();
+          ctx.arc(px, py, 1 + k * 0.9, 0, TAU);
+          ctx.fill();
         }
       }
       if (running) raf = requestAnimationFrame(draw);

@@ -1303,7 +1303,11 @@ pre code {
   padding: 40px 32px;
   border: 1px solid var(--moco-line);
   border-radius: var(--radius);
-  overflow-x: auto;
+}
+
+.demo-panel-framed {
+  padding: 0;
+  overflow: hidden;
 }
 
 .none-note {

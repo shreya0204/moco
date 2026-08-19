@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CopyButton } from "../../copy-button";
+import { FramePreview } from "../../frame-preview";
 import { demos } from "../../demos";
 import { GETTING_STARTED } from "../../docs-nav";
 import { Pager } from "../../pager";
@@ -10,6 +11,14 @@ import { depName, displayDesc, getItem, listItems } from "../../registry";
 import { REGISTRY_URL } from "../../site";
 
 export const dynamicParams = false;
+
+const FRAMED: Record<string, { height?: number; desktop?: boolean }> = {
+  dotgrid: { height: 420 },
+  hooks: { height: 520 },
+  island: { height: 520 },
+  rail: { height: 520, desktop: true },
+  palette: { height: 480 },
+};
 
 export function generateStaticParams() {
   return listItems().map((item) => ({ name: item.name }));
@@ -79,7 +88,11 @@ export default async function ComponentPage({ params }: Props) {
 
       <section aria-labelledby="preview-h">
         <h2 id="preview-h">Preview</h2>
-        {Demo ? (
+        {FRAMED[item.name] ? (
+          <div className="demo-panel demo-panel-framed">
+            <FramePreview name={item.name} {...FRAMED[item.name]} />
+          </div>
+        ) : Demo ? (
           <div className="demo-panel">
             <Demo />
           </div>
